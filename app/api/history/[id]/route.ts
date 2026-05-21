@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function GET(
-  req: NextRequest,
-  { params }: any
+  _req: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await context.params;
+
   try {
     const conversation = await prisma.conversation.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         messages: {
           orderBy: { createdAt: "asc" },
@@ -37,12 +39,14 @@ export async function GET(
 }
 
 export async function DELETE(
-  req: NextRequest,
-  { params }: any
+  _req: NextRequest,
+  context: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await context.params;
+
   try {
     await prisma.conversation.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({ success: true });
@@ -58,14 +62,16 @@ export async function DELETE(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: any
+  context: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await context.params;
+
   try {
     const body = await req.json();
     const { title } = body;
 
     const conversation = await prisma.conversation.update({
-      where: { id: params.id },
+      where: { id },
       data: { title },
     });
 
