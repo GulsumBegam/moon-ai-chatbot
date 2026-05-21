@@ -1,0 +1,246 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=JetBrains+Mono:wght@300;400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --void-950: #02010a;
+  --void-900: #06050f;
+  --void-800: #0d0b1e;
+  --void-700: #13102d;
+  --lunar-300: #a394ff;
+  --lunar-400: #8470ff;
+  --lunar-500: #6b4eff;
+  --lunar-600: #5534ff;
+  --nebula-pink: #ff6eb4;
+  --nebula-cyan: #00e5ff;
+  --nebula-gold: #ffd700;
+  --glass-white: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --scrollbar-thumb: rgba(107, 78, 255, 0.4);
+  --scrollbar-track: rgba(255, 255, 255, 0.03);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--void-950);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "DM Sans", sans-serif;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Cosmic scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 2px;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 78, 255, 0.7);
+}
+
+/* Glass morphism utility classes */
+@layer components {
+  .glass {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .glass-lunar {
+    background: rgba(107, 78, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(107, 78, 255, 0.2);
+  }
+
+  .text-shimmer {
+    background: linear-gradient(
+      135deg,
+      #a394ff 0%,
+      #ffffff 40%,
+      #00e5ff 70%,
+      #a394ff 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 4s linear infinite;
+  }
+
+  .lunar-glow {
+    box-shadow: 0 0 30px rgba(107, 78, 255, 0.4),
+      0 0 60px rgba(107, 78, 255, 0.15);
+  }
+
+  .nebula-glow {
+    box-shadow: 0 0 40px rgba(255, 110, 180, 0.2),
+      0 0 80px rgba(0, 229, 255, 0.1);
+  }
+}
+
+/* Noise texture overlay */
+.noise-overlay::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Message content markdown styles */
+.prose-cosmic {
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.75;
+}
+
+.prose-cosmic p {
+  margin-bottom: 0.75rem;
+}
+
+.prose-cosmic p:last-child {
+  margin-bottom: 0;
+}
+
+.prose-cosmic code {
+  background: rgba(107, 78, 255, 0.15);
+  border: 1px solid rgba(107, 78, 255, 0.2);
+  border-radius: 4px;
+  padding: 0.15em 0.4em;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85em;
+  color: #a394ff;
+}
+
+.prose-cosmic pre {
+  background: rgba(2, 1, 10, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.25rem;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85em;
+  line-height: 1.6;
+}
+
+.prose-cosmic pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1em;
+}
+
+.prose-cosmic h1,
+.prose-cosmic h2,
+.prose-cosmic h3 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #a394ff;
+}
+
+.prose-cosmic ul,
+.prose-cosmic ol {
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-cosmic li {
+  margin-bottom: 0.25rem;
+}
+
+.prose-cosmic a {
+  color: var(--nebula-cyan);
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 229, 255, 0.4);
+}
+
+.prose-cosmic blockquote {
+  border-left: 2px solid rgba(107, 78, 255, 0.5);
+  padding-left: 1rem;
+  margin: 0.75rem 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  font-family: "Cormorant Garamond", serif;
+}
+
+/* Cursor blink for typing */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink::after {
+  content: "▋";
+  color: var(--lunar-400);
+  animation: blink 0.8s ease-in-out infinite;
+  margin-left: 1px;
+  font-size: 0.85em;
+}
+
+/* Gradient border utility */
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(107, 78, 255, 0.6),
+    rgba(0, 229, 255, 0.3),
+    rgba(255, 110, 180, 0.3)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Smooth transitions */
+.transition-cosmic {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
