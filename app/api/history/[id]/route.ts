@@ -1,18 +1,17 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export async function GET(
-  _req: NextRequest,
-  context: { params: Promise<{ id: string }> }
-) {
-  const { id } = await context.params;
-
+export async function GET(req: Request, context: any) {
   try {
+    const id = context.params.id;
+
     const conversation = await prisma.conversation.findUnique({
       where: { id },
       include: {
         messages: {
-          orderBy: { createdAt: "asc" },
+          orderBy: {
+            createdAt: "asc",
+          },
         },
       },
     });
@@ -29,8 +28,6 @@ export async function GET(
       messages: conversation.messages,
     });
   } catch (error) {
-    console.error("Get conversation error:", error);
-
     return NextResponse.json(
       { error: "Failed to fetch conversation" },
       { status: 500 }
@@ -38,21 +35,16 @@ export async function GET(
   }
 }
 
-export async function DELETE(
-  _req: NextRequest,
-  context: { params: Promise<{ id: string }> }
-) {
-  const { id } = await context.params;
-
+export async function DELETE(req: Request, context: any) {
   try {
+    const id = context.params.id;
+
     await prisma.conversation.delete({
       where: { id },
     });
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Delete conversation error:", error);
-
     return NextResponse.json(
       { error: "Failed to delete conversation" },
       { status: 500 }
@@ -60,25 +52,21 @@ export async function DELETE(
   }
 }
 
-export async function PATCH(
-  req: NextRequest,
-  context: { params: Promise<{ id: string }> }
-) {
-  const { id } = await context.params;
-
+export async function PATCH(req: Request, context: any) {
   try {
+    const id = context.params.id;
+
     const body = await req.json();
-    const { title } = body;
 
     const conversation = await prisma.conversation.update({
       where: { id },
-      data: { title },
+      data: {
+        title: body.title,
+      },
     });
 
     return NextResponse.json({ conversation });
   } catch (error) {
-    console.error("Update conversation error:", error);
-
     return NextResponse.json(
       { error: "Failed to update conversation" },
       { status: 500 }
